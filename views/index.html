@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+
+</head>
+<body>
+<ul>
+    <li><a href="/newnote">new Note</a></li>
+    <li><a href="/discuss">discuss</a></li>
+
+</ul>
+
+<div class="container">
+    <h1>Virtual Stand-up Meeting notes</h1>
+    <p>This is the list of the last dozen meeting notes</p>
+</div>
+
+<form action="/" method="post">
+    <div class="row">
+        <select id="memberName" name="memberName">
+            <option value="">Show all</option>
+            <option value="Mark">Mark</option>
+            <option value="Pamela">Pam</option>
+
+        </select>
+        <button id="btnFilterNotes" name="btnFilterNotes">Filter</button>
+    </div>
+</form>
+
+
+
+<div class="container">
+    {% for note in notes %}
+    <div class="list-group-item">
+        <br>
+        <div> Note from {{note.memberName}}</div>
+        for project: {{note.project}}
+        <div>Work yesterday: {{note.workYesterday}}</div>
+        <div>Work today:  {{note.workToday}}</div>
+        <div>Impediment: {{note.impediment}}</div>
+        END OF NOTE
+        <br>
+    </div>
+{% endfor %}
+</div>
+
+</body>
+
+
+</html>
