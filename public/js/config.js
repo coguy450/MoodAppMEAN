@@ -20,6 +20,16 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "views/minor.html",
             data: { pageTitle: 'Wagon Time' }
         })
+        .state('profile', {
+            url: "/profile",
+            templateUrl: "views/profile.html",
+            data: { pageTitle: 'Profile'}
+        })
+        .state('gallery',{
+            url: "/gallery",
+            templateUrl: "views/basic_gallery.html",
+            data: { pageTitle: 'Discover Activities'}
+        })
 }
 angular
     .module('inspinia')
