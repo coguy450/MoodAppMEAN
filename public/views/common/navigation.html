@@ -1,0 +1,51 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav" id="side-menu">
+            <li class="nav-header">
+
+                <div class="dropdown profile-element">
+                    <!-- Picture of user -->
+                    <!--<img alt="image" class="img-circle" src="img/profile_small.jpg"/>-->
+                    <a class="dropdown-toggle" href>
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">{{main.userName}}</strong>
+                             </span>
+                                <span class="text-muted text-xs block">Menu<b class="caret"></b></span>
+                            </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="main"><i class="fa fa-line-chart"></i> <span class="nav-label">My History</span> </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-check"></i> <span class="nav-label">Check in</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-bicycle"></i> <span class="nav-label">Discover Activities</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-book"></i> <span class="nav-label">Read about depression</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-bookmark"></i> <span class="nav-label">Inspirational Quotes</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-user"></i> <span class="nav-label">Manage Profile</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="minor"><i class="fa fa-users"></i> <span class="nav-label">Find Help</span></a>
+            </li>
+        </ul>
+
+    </div>
+</nav>

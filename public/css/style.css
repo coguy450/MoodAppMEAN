@@ -748,9 +748,9 @@ fieldset[disabled] .btn-white.active {
   border-radius: 50px;
 }
 .btn-large-dim {
-  width: 90px;
-  height: 90px;
-  font-size: 42px;
+  /*width: 90px;*/
+  height: 70px;
+  font-size: 32px;
 }
 button.dim {
   display: inline-block;

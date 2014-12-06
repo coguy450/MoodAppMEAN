@@ -13,12 +13,12 @@ function config($stateProvider, $urlRouterProvider) {
         .state('main', {
             url: "/main",
             templateUrl: "views/main.html",
-            data: { pageTitle: 'Example view' }
+            data: { pageTitle: 'Wagon Time' }
         })
         .state('minor', {
             url: "/minor",
             templateUrl: "views/minor.html",
-            data: { pageTitle: 'Example view' }
+            data: { pageTitle: 'Wagon Time' }
         })
 }
 angular
