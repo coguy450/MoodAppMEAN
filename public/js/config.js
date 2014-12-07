@@ -13,22 +13,12 @@ function config($stateProvider, $urlRouterProvider) {
         .state('main', {
             url: "/main",
             templateUrl: "views/main.html",
-            data: { pageTitle: 'Wagon Time' }
+            data: { pageTitle: 'Main view' }
         })
         .state('minor', {
             url: "/minor",
             templateUrl: "views/minor.html",
-            data: { pageTitle: 'Wagon Time' }
-        })
-        .state('profile', {
-            url: "/profile",
-            templateUrl: "views/profile.html",
-            data: { pageTitle: 'Profile'}
-        })
-        .state('gallery',{
-            url: "/gallery",
-            templateUrl: "views/basic_gallery.html",
-            data: { pageTitle: 'Discover Activities'}
+            data: { pageTitle: 'minor view' }
         })
 }
 angular
