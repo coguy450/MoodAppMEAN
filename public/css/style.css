@@ -3075,6 +3075,7 @@ body.modal-open {
   font-weight: 800;
   letter-spacing: -10px;
   margin-bottom: 0px;
+    margin-left: -100px;
 }
 .middle-box h1 {
   font-size: 170px;

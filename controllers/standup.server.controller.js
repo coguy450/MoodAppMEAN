@@ -1,5 +1,5 @@
-var Standup = require('../models/standup.server.model.js'),
-    newUser = require('../models/user.model.js');
+var Standup = require('../models/standup.server.model'),
+    models = require('../models/user.model');
 
 exports.list = function(req, res){
     var query = Standup.find();
@@ -7,7 +7,6 @@ exports.list = function(req, res){
         .limit(12)
         .exec(function(err, results){
             res.render('index', {title: 'Standup - List', notes: results});
-
         });
 };
 
@@ -25,42 +24,27 @@ exports.filterByMember = function(req, res){
 
 };
 
-exports.create = function(req, res){
-    var entry = new Standup({
-        memberName: req.body.memberName,
-        project: req.body.project,
-        workYesterday: req.body.workYesterday,
-        workToday: req.body.workToday,
-        impediment: req.body.impediment
-    });
-entry.save();
 
-    //redirect to home page
-    res.redirect(301,'/');
-};
+exports.newUserRegister = function(req, res){
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
 
-
-
-
-exports.newUser = function(req, res){
-    var entry = new newUser({
-        userName: req.userName,
-        password: req.newPassword
+    var entry = new models.User({
+        firstName: req.body.firstname,
+        email: req.body.email,
+        password: hash
     });
     entry.save();
-    //redirect to home page
     res.redirect(301,'/');
+
 };
+exports.login = function(req, res){
+
+};
+
+
 
 exports.getNote = function(req, res){
     res.render('newnote', {title: 'Standup - New Note'})
 };
 
-
-
-
-
-Standup.find(function(err, results){
-    //handle the error
-
-});
