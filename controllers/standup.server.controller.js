@@ -1,6 +1,7 @@
 var Standup = require('../models/standup.server.model'),
     models = require('../models/user.model');
 
+
 exports.list = function(req, res){
     var query = Standup.find();
     query.sort({createdOn: 'desc'})

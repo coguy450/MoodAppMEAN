@@ -11,7 +11,7 @@ var session = require('client-sessions');
 
 router.get('/', utils.requireLogin, function(req, res) {
 
-    res.render('index');
+    res.render('index', {user: req.user});
 });
 
 
@@ -22,7 +22,7 @@ router.get('/login', function(req, res){
         duration: 30 * 60 * 1000,
         activeDuration: 5 * 60 * 1000
     }));
-    res.render('login', {  });
+    res.render('login');
 });
 
 router.get('/register', function(req, res){
@@ -38,7 +38,17 @@ router.post('/', function(req, res){
 });
 
 router.post('/register', function(req, res){
-    return standupCtrl.newUserRegister(req,res);
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+
+    var entry = new models.User({
+        firstName: req.body.firstname,
+        email: req.body.email,
+        password: hash
+    });
+    entry.save();
+    res.redirect(301,'/');
+
 });
 
 
@@ -58,9 +68,9 @@ router.post('/login', function(req, res) {
         } else {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 utils.createUserSession(req, res, user);
-                console.log(user.email);
-                console.log(user);
+
                 res.render('index',{user: user});
+
             } else {
                 res.render('login', { error: "Incorrect email / password."  });
             }
