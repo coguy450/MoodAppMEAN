@@ -81,7 +81,7 @@ router.post('/great', function(req, res){
         type:     5,
         userID:   req.session.user.email
     });
-    res.status(200).send({success:true});
+    //res.status(200).send({success:true});
     entry.save();
 
 });
