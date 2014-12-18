@@ -27,8 +27,7 @@ module.exports.createUserSession = function(req, res, user) {
         data:       user.data || {}
     };
 
-   req.session.user = cleanUser;
-
+    req.session.user = cleanUser;
     req.user = cleanUser;
     res.locals.user = cleanUser;
 };
@@ -69,7 +68,7 @@ module.exports.createApp = function() {
  * If a user isn't logged in, they'll be redirected back to the login page.
  */
 module.exports.requireLogin = function(req, res, next) {
-
+    next();
    if (!req.session.user) {
         res.redirect('/login');
     } else {

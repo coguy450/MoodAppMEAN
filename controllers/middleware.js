@@ -1,7 +1,7 @@
 /**
  * Created by erichartmann on 12/9/14.
  */
-var models = require('../models/user.model');
+var models = require('../models/model.js');
 var utils = require('../controllers/utils');
 
 /**

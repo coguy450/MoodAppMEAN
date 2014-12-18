@@ -1,5 +1,5 @@
 var Standup = require('../models/standup.server.model'),
-    models = require('../models/user.model');
+    models = require('../models/model.js');
 
 
 exports.list = function(req, res){

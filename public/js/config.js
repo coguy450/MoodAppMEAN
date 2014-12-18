@@ -8,17 +8,18 @@
  *
  */
 function config($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/main");
+    $urlRouterProvider.otherwise("/checkin");
     $stateProvider
-        .state('main', {
-            url: "/main",
-            templateUrl: "views/main.html",
-            data: { pageTitle: 'Main view' }
+        .state('checkin', {
+            url: "/checkin",
+            templateUrl: "views/checkin.html",
+
+            data: { pageTitle: 'Check In' }
         })
-        .state('minor', {
-            url: "/minor",
-            templateUrl: "views/minor.html",
-            data: { pageTitle: 'minor view' }
+        .state('history', {
+            url: "/history",
+            templateUrl: "views/history.html",
+            data: { pageTitle: 'View your History' }
         })
         .state('login',{
             url: "/login",

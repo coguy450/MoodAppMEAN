@@ -1,0 +1,133 @@
+
+<h1>What are you up to today?</h1>
+<div class="row"   ng-controller="checkIn">
+    <div class="col-lg-6" id="bouncer"  ng-show="hideThis" ng-animate="animate" >
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>How's your day going?</h5>
+                <div ibox-tools></div>
+                </div>
+                    <div class="ibox-content text-center">
+                        <h3 class="font-bold">Click a button</h3>
+
+                            <form ng-submit="flyOut()" >
+                                <input type="hidden" >{{req.session.user.email}}</input>
+                                <button class="btn btn-primary btn-large-dim text" ng-click="" type="submit">
+                                    <i class="fa fa-rocket"></i> I feel Great!</button><br>
+                            </form>
+
+
+                        <button class="btn btn-info btn-large-dim" type="button"><i class="fa fa-thumbs-up"></i> I feel OK</button><br>
+                        <button class="btn btn-warning btn-large-dim" type="button"><i class="fa fa-thumbs-down"></i> Not so good</button><br>
+                        <button class="btn btn-danger btn-large-dim" type="button"><i class="fa fa-ambulance"></i> I'm miserable</button>
+                    </div>
+        </div>
+    </div>
+
+
+
+        <div class="col-lg-6" id="bounceIn" style="display: none" ng-animate="animate" >
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Great, Let's do an activity</h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content text-center">
+                 Here's a list of your activities<br>
+                Activity 1<br>
+                    Activity 2<br>
+                </div>
+            </div>
+</div>
+    <div class="col-lg-3">
+        <div class="widget style1">
+            <div class="row">
+                <div class="col-xs-4 text-center">
+                    <i class="fa fa-trophy fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Today's WagonScore </span>
+
+                    <h2 class="font-bold">15</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="widget style1">
+            <div class="row">
+                <div class="col-xs-4 text-center">
+                    <i class="fa fa-trophy fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span>Average WagonScore </span>
+
+                    <h2 class="font-bold">100</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="ibox-content">
+            <div>
+                <div>
+                    <span>Today's score</span>
+                    <small class="pull-right">10</small>
+                </div>
+                <div class="progress progress-small">
+                    <div style="width: 50%;" class="progress-bar"></div>
+                </div>
+
+                <div>
+                    <span>Your Average</span>
+                    <small class="pull-right">20</small>
+                </div>
+                <div class="progress progress-small">
+                    <div style="width: 70%;" class="progress-bar"></div>
+                </div>
+
+                <div>
+                    <span>Average WagonTime user score</span>
+                    <small class="pull-right">17</small>
+                </div>
+                <div class="progress progress-small">
+                    <div style="width: 75%;" class="progress-bar"></div>
+                </div>
+
+                <div>
+                    <span>Unhealthy Level</span>
+                    <small class="pull-right">5</small>
+                </div>
+                <div class="progress progress-small">
+                    <div style="width: 10%;" class="progress-bar progress-bar-danger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Activities that need rated</h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content text-center">
+                    <h3 class="font-bold">Click a button</h3>
+                    <button class="btn btn-primary btn-large-dim text" type="button"><i class="fa fa-rocket"></i> I feel Great!</button><br>
+                    <button class="btn btn-info btn-large-dim" type="button"><i class="fa fa-thums-up"></i> I feel OK</button><br>
+                    <button class="btn btn-warning btn-large-dim" type="button"><i class="fa fa-heart"></i> Not so good</button><br>
+                    <button class="btn btn-danger btn-large-dim" type="button"><i class="fa fa-thumbs-down"></i> I'm miserable</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+  <br>
+        <br>
