@@ -1,51 +1,51 @@
+
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Login to WagonTime</title>
-
+    <title>WagonTime</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
 </head>
-
-<body class="gray-bg">
-
-    <div class="middle-box text-center loginscreen  animated fadeInDown" >
-        <div>
-            <div>
-
+<body>
+<!--login modal-->
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Login to WagonTime</h1>
             </div>
-            <h3>Welcome to WagonTime</h3>
-
-            </p>
-            <p>Start feeling better</p>
-            <span style="color:red; font-size: large">{{error}}</span>
-            <form class="m-t" role="form" method="post" action="/login">
-                <!--<input type="hidden" name="_csrf" value={{csrfToken}} >-->
-                <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="email" required="">
+            <div class="modal-body">
+                <form class="form col-md-12 center-block" method="post" action="/login">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="email" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+                        <span class="pull-right"><a href="/register">Register</a></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 </div>
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                <a href="#"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="/register">Create an account</a>
-            </form>
-            <p class="m-t"> <small>WagonTime &copy; 2014</small> </p>
+            </div>
         </div>
     </div>
-
+</div>
+<!-- script references -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>
