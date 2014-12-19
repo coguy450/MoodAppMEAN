@@ -68,7 +68,7 @@ module.exports.createApp = function() {
  * If a user isn't logged in, they'll be redirected back to the login page.
  */
 module.exports.requireLogin = function(req, res, next) {
-   
+
    if (!req.session.user) {
         res.redirect('/login');
     } else {

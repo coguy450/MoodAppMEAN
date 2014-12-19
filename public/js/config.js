@@ -12,7 +12,7 @@ function config($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('checkin', {
             url: "/checkin",
-            templateUrl: "views/checkin.html",
+            templateUrl: "views/checkIn.html",
 
             data: { pageTitle: 'Check In' }
         })
