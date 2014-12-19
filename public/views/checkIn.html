@@ -1,7 +1,7 @@
 
 <h1>What are you up to today?</h1>
 <div class="row"   ng-controller="checkIn">
-    <div class="col-lg-6" id="bouncer"  ng-show="hideThis" ng-animate="animate" >
+    <div class="col-lg-6" id="bouncer"  ng-show="hideThis"  >
 
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -12,7 +12,7 @@
                         <h3 class="font-bold">Click a button</h3>
 
                             <form ng-submit="flyOut()" >
-                                <input type="hidden" >{{req.session.user.email}}</input>
+
                                 <button class="btn btn-primary btn-large-dim text" ng-click="" type="submit">
                                     <i class="fa fa-rocket"></i> I feel Great!</button><br>
                             </form>
@@ -27,7 +27,7 @@
 
 
 
-        <div class="col-lg-6" id="bounceIn" style="display: none" ng-animate="animate" >
+        <div class="col-lg-6" id="bounceIn" style="display: none"  >
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
