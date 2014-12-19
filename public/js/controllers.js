@@ -42,9 +42,13 @@ function checkIn($scope,$http,$animate){
                     } else {
 
                         $('#bouncer').addClass("animated rotateOutUpLeft");
+                        $('#outRight').addClass("animated rotateOutUpRight");
+
+
                         $('#bouncer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                           $('#bouncer').hide();
                             $('#bounceIn').show().addClass('animated rotateInDownRight');
+                            $('#bouncer').hide();
+                            $('#outRight').hide();
                         });
 
                     }
