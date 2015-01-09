@@ -38,7 +38,7 @@ function config($stateProvider, $urlRouterProvider) {
         })
         .state('discover',{
             url: '/discover',
-            templateUrl: 'views/basic_gallery.html',
+            templateUrl: 'views/minor.html',
             data: {pageTitle: 'Discover New Activities'}
         })
         .state('love',{

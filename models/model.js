@@ -18,7 +18,7 @@ module.exports.User = mongoose.model('User', new Schema({
 }));
 
 module.exports.checkin = mongoose.model('checkin', new Schema({
-    type:         {type: Number},
+    type:         {type: Number, required: 'checkin Type is required'},
     userID:       {type: String},
     createdOn:    {type: Date, default: Date.now}
 }));
@@ -32,12 +32,12 @@ module.exports.allActivities = mongoose.model('allActivities',{
     picture:              {type: String},
     createdBy:            {type: String}
 });
-
-module.exports.userActivities = mongoose.model('userActivities',{
+module.exports.userActivities = mongoose.model('userActivities', new Schema({
     activityName:         {type: String, required: 'Activity Name is required'},
     description:          {type: String},
-    parentActivity:       {type: String}
-});
+    parentActivity:       {type: String},
+    user:                 {type: String}
+}));
 
 module.exports.activityNotes = mongoose.model('activityNotes',{
     activity:              {type:String, require: 'Activity ID is required'},
@@ -47,4 +47,3 @@ module.exports.activityNotes = mongoose.model('activityNotes',{
     share:                 {type: String},
     beforeNotes:           {type: String}
 });
-

@@ -45,7 +45,7 @@ module.exports.createApp = function() {
 
 
     // middleware
-    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(session({
         cookieName: 'wagonTimeSession',
         secret: 'keyboard cat',

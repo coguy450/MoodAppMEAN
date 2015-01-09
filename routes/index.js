@@ -5,6 +5,7 @@ var utils = require('../controllers/utils');
 var bcrypt = require('bcryptjs');
 var models = require('../models/model.js');
 var session = require('client-sessions');
+var bodyParser = require('body-parser');
 
 
 /* GET home page. */
@@ -17,6 +18,12 @@ router.get('/', utils.requireLogin, function(req, res) {
 router.post('/', function(req, res){
     return standupCtrl.filterByMember(req, res);
 });
+
+router.post('/myActivities', function(req, res){
+    return standupCtrl.myActivities(req, res);
+});
+
+
 
 router.get('/register', function(req, res){
     res.render('register', {
@@ -91,24 +98,44 @@ router.post('/ok', function(req, res){
         type:     3,
         userID:   req.session.user.email
     });
-
+    res.send({success:true});
     entry.save();
 });
 
 router.post('/notgood', function(req, res){
     var entry = new models.checkin({
         type:     2,
-        userID:   req.session.userID
+        userID:   req.session.user.email
     });
+    res.send({success:true});
     entry.save();
 });
 
 router.post('/bad', function(req, res){
     var entry = new models.checkin({
         type:     1,
-        userID:   req.session.userID
+        userID:   req.session.user.email
     });
+    res.send({success:true});
     entry.save();
 });
+
+router.post('/newAct', function(req,res){
+    var entry = new models.userActivities({
+        activityName:  req.body.activityName,
+        description:   req.body.description,
+        parentActivity:   req.body.parentActivity,
+        user: req.session.user.email
+    });
+    entry.save();
+    res.redirect('/');
+
+});
+
+router.post('/myHistory', function(req, res){
+    return standupCtrl.myHistory(req, res);
+});
+
+
 
 module.exports = router;

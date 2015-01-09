@@ -10,17 +10,22 @@
                 </div>
                     <div class="ibox-content text-center">
                         <h3 class="font-bold">Click a button</h3>
-
-                            <form ng-submit="flyOut()" >
-
-                                <button class="btn btn-primary btn-large-dim text" ng-click="" type="submit">
+                            <form ng-submit="flyOut('great')" >
+                                <button class="btn btn-primary btn-large-dim text"  type="submit">
                                     <i class="fa fa-rocket"></i> I feel Great!</button><br>
                             </form>
+                        <form ng-submit="flyOut('ok')" >
+                            <button class="btn btn-info btn-large-dim" type="submit"><i class="fa fa-thumbs-up">
+                             </i> I feel OK</button><br>
+                        </form>
 
+                        <form ng-submit="flyOut('notgood')" >
+                            <button class="btn btn-warning btn-large-dim" type="submit"><i class="fa fa-thumbs-down"></i> Not so good</button><br>
+                       </form>
 
-                        <button class="btn btn-info btn-large-dim" type="button"><i class="fa fa-thumbs-up"></i> I feel OK</button><br>
-                        <button class="btn btn-warning btn-large-dim" type="button"><i class="fa fa-thumbs-down"></i> Not so good</button><br>
-                        <button class="btn btn-danger btn-large-dim" type="button"><i class="fa fa-ambulance"></i> I'm miserable</button>
+                        <form ng-submit="flyOut('bad')" >
+                            <button class="btn btn-danger btn-large-dim" type="submit"><i class="fa fa-ambulance"></i> I'm miserable</button>
+                        </form>
                     </div>
         </div>
     </div>
@@ -31,15 +36,17 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
+
                     <h5>Great, Let's do an activity</h5>
                     <div ibox-tools></div>
                 </div>
                 <div class="ibox-content text-center">
                  Here's a list of your activities<br>
-                Activity 1<br>
-                    Activity 2<br>
-                    Activity 3<br>
-                    Activity 4<br>
+
+               <div ng-repeat="a in myActivities">
+                <h4> {{a.activityName}} - {{a.description}} <buton type="button" class="btn btn-w-m btn-info">Do this Activity</buton>  <br></h4>
+
+               </div>
                 </div>
             </div>
 </div>

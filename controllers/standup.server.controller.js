@@ -2,6 +2,7 @@ var Standup = require('../models/standup.server.model'),
     models = require('../models/model.js');
 
 
+
 exports.list = function(req, res){
     var query = Standup.find();
     query.sort({createdOn: 'desc'})
@@ -19,11 +20,37 @@ exports.filterByMember = function(req, res){
         query.where({memberName: filter})
     }
     query.exec(function(err, results){
-        res.render('index', {title: 'Standup - List', notes: results})
-
+        res.send({myActivities:results})
     });
 
 };
+
+exports.myActivities = function(req, res){
+    var query = models.userActivities.find();
+    var filter = req.session.user.email;
+    query.sort({createdOn: 'desc'});
+    query.where({user: filter});
+    query.exec(function(err, results){
+        res.send({
+            myActivities:results,
+            success:true})
+    });
+};
+
+
+exports.myHistory = function(req, res){
+    var query = models.checkin.find();
+    var filter = req.session.user.email;
+    query.sort({createdOn: 'desc'});
+    query.limit(25);
+    query.where({userID: filter});
+    query.exec(function(err, results){
+        res.send({
+            myHistory:results,
+            success:true})
+    });
+};
+
 
 
 exports.newUserRegister = function(req, res){
