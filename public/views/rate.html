@@ -1,0 +1,77 @@
+<div ng-controller="rateCtrl">
+<div class="row wrapper border-bottom white-bg page-heading" >
+    <div class="col-sm-4">
+        <h2>Rate Past Activities</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="checkin">Home</a>
+            </li>
+            <li class="active">
+                <strong>Unrated activities</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+<div class="wrapper wrapper-content animated fadeInUp">
+
+<div class="ibox">
+
+<div class="ibox-content">
+<div class="row m-b-sm m-t-sm">
+    <div class="col-md-1">
+        <button type="button" ng-click="refreshPage()" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
+    </div>
+    <div class="col-md-11">
+        <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+    </div>
+</div>
+
+<div class="project-list">
+
+<table class="table table-hover">
+<tbody>
+<tr ng-repeat="u in myUnrated">
+    <td  class="project-status">
+        <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
+      <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
+    </td>
+    <td class="project-title">
+        <a ui-sref="project_detail">{{u.activity}}</a>
+        <br/>
+        <small>Done on: {{u.createdOn | date: mediumDate}}</small>
+    </td>
+    <td class="project-completion">
+        <small>How did it make you feel? </small>
+        <div class="btn-group-sm">
+            <button ng-click="rateOne(u._id,100)" class="btn btn-sm btn-primary">Way Better</button>
+            <button ng-click="rateOne(u._id,80)" class="btn btn-sm btn-success">A bit Better</button>
+            <button ng-click="rateOne(u._id,50)" class="btn btn-sm btn-info">Same</button>
+            <button ng-click="rateOne(u._id,30)" class="btn btn-sm btn-warning">A bit Worse</button>
+            <button ng-click="rateOne(u._id,0)" class="btn btn-sm btn-danger">Way Worse</button>
+        </div>
+
+    </td>
+    <td class="project-actions">
+
+
+    </td>
+    <td class="project-actions">
+        <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-star"></i> Note Added</span>
+        <small>Write some notes</small>
+        <input type="text" ng-model="notes"> <button ng-click="addNotes(u._id,notes)">Add notes</button>
+    </td>
+
+</tr>
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

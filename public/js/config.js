@@ -47,6 +47,11 @@ function config($stateProvider, $urlRouterProvider) {
             data: {pageTitle: 'Activities you Love'}
 
         })
+        .state('rate',{
+            url: '/rate',
+            templateUrl: 'views/rate.html',
+            data: {pageTitle: 'Discover New Activities'}
+        })
 }
 angular
     .module('inspinia')

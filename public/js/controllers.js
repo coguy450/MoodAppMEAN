@@ -11,18 +11,16 @@
 
 function MainCtrl() {
 
-    this.userName = 'Example user';
+    this.userName = "example user";
     this.helloText = 'Welcome to WagonTime';
     this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
     this.giveMessage = 'default';
     this.slideInterval = 5000;
-
-
 };
 
 
-function checkIn($scope,$http){
-
+function checkIn($scope,$http,$location){
+    $scope.hideThis = "true";
     $scope.getActivities = function(){
         $http({
             method  : 'POST',
@@ -36,14 +34,12 @@ function checkIn($scope,$http){
                     // if not successful, bind errors to error variables
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
-                    console.log(data);
                     $scope.myActivities = data.myActivities;
 
                 }
             })
     };
-    $scope.hideThis = "true";
-        $scope.flyOut = function(happy) {
+    $scope.flyOut = function(happy) {
             $http({
                 method  : 'POST',
                 url     : '/'+ happy,
@@ -51,7 +47,7 @@ function checkIn($scope,$http){
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
             })
                 .success(function(data) {
-                    console.log(data);
+
                     if (!data.success) {
                         // if not successful, bind errors to error variables
                      alert('error, you must not be connected to the internet, try again later');
@@ -70,20 +66,42 @@ function checkIn($scope,$http){
                             })
                                 .success(function(data) {
                                     if (!data.success) {
-
-                                        // if not successful, bind errors to error variables
                                         alert('error, you must not be connected to the internet, try again later');
                                     } else{
-                                        console.log(data);
-                                        $scope.myActivities = data.myActivities;
-
+                                        $scope.myActivities =  data.myActivities;
                                     }
                                 })
                         });
                     }
                 });
         };
-}
+    $scope.doActivity = function(activityID){
+
+        $http({
+            method  : 'POST',
+            url     : '/do',
+            data    : {activity:activityID}  // pass in data as strings
+
+        })
+            .success(function(data) {
+                if (!data.success) {
+                    alert('error, you must not be connected to the internet, try again later');
+                } else{
+                    $location.path('/rate');
+                  //success function
+                    //$('#bounceIn').addClass("animated rotateOutUpLeft");
+                   // $('#bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                      //  $('#bounceIn').hide();
+                        //$('#bouncer').show();
+                            //.addClass('animated rotateInDownRight');
+                     //   $('#outRight').show();
+                            //.addClass('animated rotateInDownLeft');
+                  //  })
+                }
+            })
+
+    }
+};
 
 function chartJsCtrl($scope,$http) {
     /**
@@ -109,7 +127,6 @@ function chartJsCtrl($scope,$http) {
             label: "Laptop"
         }
     ];
-
     /**
      * Options for Polar chart
      */
@@ -128,7 +145,6 @@ function chartJsCtrl($scope,$http) {
         animateRotate : true,
         animateScale : false
     };
-
     /**
      * Data for Doughnut chart
      */
@@ -136,10 +152,6 @@ function chartJsCtrl($scope,$http) {
     $scope.doghnutOK = [];
     $scope.doghnutNotSoGood = [];
     $scope.doghnutBad = [];
-
-
-
-
 
     /**
      * Options for Doughnut chart
@@ -359,9 +371,105 @@ function chartJsCtrl($scope,$http) {
 
 };
 
+function rateCtrl($scope,$http,$state){
+    $http({
+        method  : 'GET',
+        url     : '/unrated',
+        data    : {},  // pass in data as strings
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+    })
+        .success(function(data) {
+            if (!data.success) {
+                alert('error, you must not be connected to the internet, try again later');
+            } else{
+                $scope.myUnrated= data.myUnrated;
+            }
+        });
+    $scope.rateOne = function(actID, rate){
+        $http({
+            method  : 'POST',
+            url     : '/rate',
+            data    : {activity: actID, rating: rate}  // pass in data as strings
+
+        })
+            .success(function(data) {
+                if (!data.success) {
+                    alert('error, you must not be connected to the internet, try again later');
+                } else{
+                //successful save
+                    $('#unrated'+ actID).hide();
+                    $('#rated'+ actID).show();
+                }
+            });
+
+    };
+    $scope.refreshPage = function(){
+        $state.reload();
+    };
+    $scope.addNotes = function(actID,note){
+        $http({
+            method  : 'POST',
+            url     : '/note',
+            data    : {activity: actID, note: note}  // pass in data as strings
+
+        })
+            .success(function(data) {
+                if (!data.success) {
+                    alert('error, you must not be connected to the internet, try again later');
+                } else{
+                    //successful save
+                    $('#noted'+ actID).show();
+                }
+            });
+
+
+    }
+}
+
+function activityCtrl($scope,$http,$filter) {
+    $http({
+        method: 'POST',
+        url: '/myActivities',
+        data: {}  // pass in data as strings
+    })
+        .success(function (data) {
+            if (!data.success) {
+
+                // if not successful, bind errors to error variables
+                alert('error, you must not be connected to the internet, try again later');
+            } else {
+                $scope.myActivities = data.myActivities;
+                $http({
+                    method: 'GET',
+                    url: '/ratings',
+                    data: {}  // pass in data as strings
+                })
+                    .success(function (data) {
+                        if (!data.success) {
+
+                            // if not successful, bind errors to error variables
+                            alert('error, you must not be connected to the internet, try again later');
+                        } else {
+                            angular.forEach($scope.myActivities, function(key, value){
+                                    angular.forEach(data.ratings, function(rkey,rvalue){
+                                       if(rkey._id === key.activityName){
+                                           key.rating = rkey.Avg * 100;
+                                       }
+                                    });
+
+                            });
+                            $scope.myRatings = data.ratings;
+
+                        }
+                    });
+            }
+        })
+};
 
 angular
     .module('inspinia')
     .controller('MainCtrl ', MainCtrl)
     .controller('checkIn', checkIn)
+    .controller('rateCtrl', rateCtrl)
+    .controller('activityCtrl', activityCtrl)
     .controller('chartJsCtrl', chartJsCtrl);

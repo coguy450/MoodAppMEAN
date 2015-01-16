@@ -30,6 +30,8 @@ module.exports.createUserSession = function(req, res, user) {
     req.session.user = cleanUser;
     req.user = cleanUser;
     res.locals.user = cleanUser;
+   // res.session.user = cleanUser;
+    console.log("session created");
 };
 
 /**
@@ -43,13 +45,12 @@ module.exports.createUserSession = function(req, res, user) {
  */
 module.exports.createApp = function() {
 
-
     // middleware
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(session({
         cookieName: 'wagonTimeSession',
         secret: 'keyboard cat',
-        duration: 30 * 60 * 1000,
+        duration: 30 * 60 * 10000,
         activeDuration: 5 * 60 * 1000
     }));
     app.use(csrf());
@@ -70,6 +71,7 @@ module.exports.createApp = function() {
 module.exports.requireLogin = function(req, res, next) {
 
    if (!req.session.user) {
+
         res.redirect('/login');
     } else {
         next();

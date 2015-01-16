@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var standupCtrl = require('../controllers/standup.server.controller');
+var serverCtrl = require('../controllers/server.controller.js');
 var utils = require('../controllers/utils');
 var bcrypt = require('bcryptjs');
 var models = require('../models/model.js');
@@ -12,15 +12,16 @@ var bodyParser = require('body-parser');
 
 router.get('/', utils.requireLogin, function(req, res) {
     res.render('index', {user: req.user});
+
 });
 
 //example for query
 router.post('/', function(req, res){
-    return standupCtrl.filterByMember(req, res);
+    return serverCtrl.filterByMember(req, res);
 });
 
 router.post('/myActivities', function(req, res){
-    return standupCtrl.myActivities(req, res);
+    return serverCtrl.myActivities(req, res);
 });
 
 
@@ -43,7 +44,6 @@ router.post('/register', function(req, res){
     });
     entry.save();
     res.redirect(301,'/');
-
 });
 
 
@@ -67,6 +67,7 @@ router.post('/login', function(req, res) {
         } else {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 utils.createUserSession(req, res, user);
+             //   res.redirect('/');
                 res.render('index',{user: user});
             } else {
                 res.render('login', { error: "Incorrect email / password."  });
@@ -132,10 +133,30 @@ router.post('/newAct', function(req,res){
 
 });
 
-router.post('/myHistory', function(req, res){
-    return standupCtrl.myHistory(req, res);
+router.post('/do', function(req,res){
+    return serverCtrl.doActivity(req,res);
+
 });
 
+router.post('/myHistory', function(req, res){
+    return serverCtrl.myHistory(req, res);
+});
+
+router.get('/unrated', function(req,res){
+    return serverCtrl.unrated(req,res);
+});
+
+router.post('/rate', function(req,res){
+    return serverCtrl.rate(req,res);
+});
+
+router.post('/note', function(req,res){
+   return serverCtrl.note(req,res);
+});
+
+router.get('/ratings', function(req,res){
+    return serverCtrl.avgRatings(req,res);
+});
 
 
 module.exports = router;

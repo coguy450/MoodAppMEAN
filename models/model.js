@@ -36,14 +36,17 @@ module.exports.userActivities = mongoose.model('userActivities', new Schema({
     activityName:         {type: String, required: 'Activity Name is required'},
     description:          {type: String},
     parentActivity:       {type: String},
-    user:                 {type: String}
+    user:                 {type: String},
+    category:             {type: String},
+    createdOn:            {type: Date, default: Date.now}
 }));
 
-module.exports.activityNotes = mongoose.model('activityNotes',{
+module.exports.activityNotes = mongoose.model('activityNotes', new Schema({
     activity:              {type:String, require: 'Activity ID is required'},
+    user:                  {type:String},
     rating:                {type: Number},
     note:                  {type: String},
     createdOn:             {type: Date, default: Date.now},
     share:                 {type: String},
     beforeNotes:           {type: String}
-});
+}));

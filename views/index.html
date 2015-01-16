@@ -37,7 +37,7 @@
                         <a class="dropdown-toggle" href>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">{{user.firstName}}</strong>
+                                    <strong class="font-bold">{{user.firstName}}{{locals.user.firstName}}</strong>
                              </span>
                                 <span class="text-muted text-xs block">Example menu<b class="caret"></b></span>
                             </span>
@@ -58,7 +58,10 @@
                     <a ui-sref="history"><i class="fa fa-area-chart"></i> <span class="nav-label">My history</span> </a>
                 </li>
                 <li ui-sref-active="active">
-                    <a ui-sref="love"><i class="fa fa-heart"></i> <span class="nav-label">Activities you love</span></a>
+                    <a ui-sref="love"><i class="fa fa-heart"></i> <span class="nav-label">Your Activities</span></a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="rate"><i class="fa fa-heart"></i> <span class="nav-label">Rate Past Activities</span></a>
                 </li>
                 <li ui-sref-active="active">
                     <a ui-sref="discover"><i class="fa fa-bicycle"></i> <span class="nav-label">Discover new Activities</span></a>

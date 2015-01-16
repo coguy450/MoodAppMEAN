@@ -9,22 +9,22 @@
                 <div ibox-tools></div>
                 </div>
                     <div class="ibox-content text-center">
-                        <h3 class="font-bold">Click a button</h3>
+
                             <form ng-submit="flyOut('great')" >
-                                <button class="btn btn-primary btn-large-dim text"  type="submit">
+                                <button class="btn btn-primary btn-med-dim text"  type="submit">
                                     <i class="fa fa-rocket"></i> I feel Great!</button><br>
                             </form>
                         <form ng-submit="flyOut('ok')" >
-                            <button class="btn btn-info btn-large-dim" type="submit"><i class="fa fa-thumbs-up">
+                            <button class="btn btn-info btn-med-dim" type="submit"><i class="fa fa-thumbs-up">
                              </i> I feel OK</button><br>
                         </form>
 
                         <form ng-submit="flyOut('notgood')" >
-                            <button class="btn btn-warning btn-large-dim" type="submit"><i class="fa fa-thumbs-down"></i> Not so good</button><br>
+                            <button class="btn btn-warning btn-med-dim" type="submit"><i class="fa fa-thumbs-down"></i> Not so good</button><br>
                        </form>
 
                         <form ng-submit="flyOut('bad')" >
-                            <button class="btn btn-danger btn-large-dim" type="submit"><i class="fa fa-ambulance"></i> I'm miserable</button>
+                            <button class="btn btn-danger btn-med-dim" type="submit"><i class="fa fa-ambulance"></i> I'm miserable</button>
                         </form>
                     </div>
         </div>
@@ -32,21 +32,40 @@
 
 
 
-        <div class="col-lg-12" id="bounceIn" style="display: none"  >
-
+        <div class="col-lg-10 col-lg-offset-1" id="bounceIn" style="display: none"  >
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-
                     <h5>Great, Let's do an activity</h5>
                     <div ibox-tools></div>
                 </div>
                 <div class="ibox-content text-center">
-                 Here's a list of your activities<br>
+                 Here's a list of your activities
+                    <table class="table table-hover">
+                        <tr ng-repeat="a in myActivities" >
+                            <td class="project-status">
+                                <span class="label label-primary">Positive</span>
+                            </td>
+                            <td class="project-title">
+                                <a ui-sref="project_detail">{{a.activityName}}</a>
+                                <br/>
+                              <small>{{a.description}}</small>
+                            </td>
+                            <td class="project-completion">
+                                <small>Success Rating : 28%</small>
+                            </td>
+                            <td class="project-actions">
+                                <form ng-submit="doActivity(a.activityName)">
+                                        <button type="submit" class="btn btn-white btn-sm"><i class="fa fa-soccer-ball-o"></i> Do This Activity </button>
+                                        <a href="" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                    <input type="hidden" name="actID" value="{{a.activityName}}">
+                                </form>
+                            </td>
 
-               <div ng-repeat="a in myActivities">
-                <h4> {{a.activityName}} - {{a.description}} <buton type="button" class="btn btn-w-m btn-info">Do this Activity</buton>  <br></h4>
 
+                        </tr>
+                       <div >
                </div>
+                    </table>
                 </div>
             </div>
 </div>
@@ -98,19 +117,49 @@
 
 
 
-    <div class="row">
+    <div class="row" ng-controller="rateCtrl">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Activities that need rated</h5>
-                    <div ibox-tools></div>
+
                 </div>
                 <div class="ibox-content text-center">
-                    <h3 class="font-bold">Click a button</h3>
-                    <button class="btn btn-primary btn-large-dim text" type="button"><i class="fa fa-rocket"></i> I feel Great!</button><br>
-                    <button class="btn btn-info btn-large-dim" type="button"><i class="fa fa-thums-up"></i> I feel OK</button><br>
-                    <button class="btn btn-warning btn-large-dim" type="button"><i class="fa fa-heart"></i> Not so good</button><br>
-                    <button class="btn btn-danger btn-large-dim" type="button"><i class="fa fa-thumbs-down"></i> I'm miserable</button>
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr ng-repeat="u in myUnrated">
+                            <td  class="project-status">
+                                <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
+                                <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
+                            </td>
+                            <td class="project-title">
+                                <a ui-sref="project_detail">{{u.activity}}</a>
+                                <br/>
+                                <small>Done on: {{u.createdOn | date: mediumDate}}</small>
+                            </td>
+                            <td class="project-completion">
+                                <small>How did it make you feel? </small>
+                                <div class="btn-group-sm">
+                                    <button ng-click="rateOne(u._id,3)" class="btn btn-sm btn-primary">Way Better</button>
+                                    <button ng-click="rateOne(u._id,1)" class="btn btn-sm btn-success">A bit Better</button>
+                                    <button ng-click="rateOne(u._id,0)" class="btn btn-sm btn-info">Same</button>
+                                    <button ng-click="rateOne(u._id,-1)" class="btn btn-sm btn-warning">A bit Worse</button>
+                                    <button ng-click="rateOne(u._id,-3)" class="btn btn-sm btn-danger">Way Worse</button>
+                                </div>
+
+                            </td>
+                            <td class="project-actions">
+
+
+                            </td>
+                            <td class="project-actions">
+                                <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-thumbs-up"></i> Added</span>
+                                <small>Write some notes</small>
+                                <input type="text" ng-model="notes"> <button ng-click="addNotes(u._id,notes)">Add notes</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
