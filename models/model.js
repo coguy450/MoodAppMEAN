@@ -42,6 +42,7 @@ module.exports.userActivities = mongoose.model('userActivities', new Schema({
 }));
 
 module.exports.activityNotes = mongoose.model('activityNotes', new Schema({
+    id:                    ObjectId,
     activity:              {type:String, require: 'Activity ID is required'},
     user:                  {type:String},
     rating:                {type: Number},

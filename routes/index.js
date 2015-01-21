@@ -158,5 +158,12 @@ router.get('/ratings', function(req,res){
     return serverCtrl.avgRatings(req,res);
 });
 
+router.post('/oneRating', function(req,res){
+    return serverCtrl.oneRating(req,res);
+});
+
+router.post('/getNotes', function(req,res){
+    return serverCtrl.getNotes(req,res);
+});
 
 module.exports = router;

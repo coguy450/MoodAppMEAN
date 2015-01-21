@@ -1,8 +1,4 @@
-/**
- * INSPINIA - Responsive Admin Theme
- * Copyright 2014 Webapplayers.com
- *
- */
+
 
 
 /**
@@ -105,4 +101,4 @@ angular
     .directive('pageTitle', pageTitle)
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)
-    .directive('minimalizaSidebar', minimalizaSidebar)
+    .directive('minimalizaSidebar', minimalizaSidebar);

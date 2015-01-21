@@ -1,10 +1,6 @@
 /**
- * INSPINIA - Responsive Admin Theme
- * Copyright 2014 Webapplayers.com
- *
- * Inspinia theme use AngularUI Router to manage routing and views
- * Each view are defined as state.
- * Initial there are written stat for all view in theme.
+ * Inspinia theme uses AngularUI Router to manage routing and views
+ * Each view are defined as states.
  *
  */
 function config($stateProvider, $urlRouterProvider) {
@@ -13,7 +9,6 @@ function config($stateProvider, $urlRouterProvider) {
         .state('checkin', {
             url: "/checkin",
             templateUrl: "views/checkIn.html",
-
             data: { pageTitle: 'Check In' }
         })
         .state('history', {
@@ -50,7 +45,12 @@ function config($stateProvider, $urlRouterProvider) {
         .state('rate',{
             url: '/rate',
             templateUrl: 'views/rate.html',
-            data: {pageTitle: 'Discover New Activities'}
+            data: {pageTitle: 'Rate Your Activities'}
+        })
+        .state('activity',{
+            url: '/activity',
+            templateUrl: 'views/activity.html',
+            data: {pageTitle: 'View this Activity'}
         })
 }
 angular

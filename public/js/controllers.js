@@ -1,25 +1,19 @@
-/**
- * INSPINIA - Responsive Admin Theme
- * Copyright 2014 Webapplayers.com
- *
- */
-
 
 /**
  * MainCtrl - controller
  */
 
 function MainCtrl() {
-
     this.userName = "example user";
     this.helloText = 'Welcome to WagonTime';
-    this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
+    this.descriptionText = '';
     this.giveMessage = 'default';
     this.slideInterval = 5000;
-};
+}
 
 
-function checkIn($scope,$http,$location){
+
+function checkIn($scope,$http,$location,getData){
     $scope.hideThis = "true";
     $scope.getActivities = function(){
         $http({
@@ -30,12 +24,10 @@ function checkIn($scope,$http,$location){
         })
             .success(function(data) {
                 if (!data.success) {
-
                     // if not successful, bind errors to error variables
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
                     $scope.myActivities = data.myActivities;
-
                 }
             })
     };
@@ -47,7 +39,6 @@ function checkIn($scope,$http,$location){
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
             })
                 .success(function(data) {
-
                     if (!data.success) {
                         // if not successful, bind errors to error variables
                      alert('error, you must not be connected to the internet, try again later');
@@ -69,6 +60,8 @@ function checkIn($scope,$http,$location){
                                         alert('error, you must not be connected to the internet, try again later');
                                     } else{
                                         $scope.myActivities =  data.myActivities;
+                                       $scope.ratings =  getData.getting('/ratings',{});
+                                        console.log($scope.ratings);
                                     }
                                 })
                         });
@@ -426,7 +419,7 @@ function rateCtrl($scope,$http,$state){
     }
 }
 
-function activityCtrl($scope,$http,$filter) {
+function activityCtrl($scope,$http,$rootScope,$state,$filter) {
     $http({
         method: 'POST',
         url: '/myActivities',
@@ -439,32 +432,101 @@ function activityCtrl($scope,$http,$filter) {
                 alert('error, you must not be connected to the internet, try again later');
             } else {
                 $scope.myActivities = data.myActivities;
-                $http({
-                    method: 'GET',
-                    url: '/ratings',
-                    data: {}  // pass in data as strings
-                })
-                    .success(function (data) {
-                        if (!data.success) {
-
-                            // if not successful, bind errors to error variables
-                            alert('error, you must not be connected to the internet, try again later');
-                        } else {
                             angular.forEach($scope.myActivities, function(key, value){
                                     angular.forEach(data.ratings, function(rkey,rvalue){
                                        if(rkey._id === key.activityName){
-                                           key.rating = rkey.Avg * 100;
+                                           if (rkey.Avg){
+                                                key.rating = rkey.Avg;
+                                           } else {
+                                               key.rating = 0;
+                                           }
                                        }
                                     });
-
                             });
+                            $scope.predicate = '-rating';
+
                             $scope.myRatings = data.ratings;
+                            angular.forEach($scope.myActivities, function(key,value){
+                                if (!key.rating){
+                                    key.rating = 0;
+                                }
+
+                            })
+
 
                         }
                     });
-            }
+
+
+    $scope.goToActivity = function(act){
+
+        $rootScope.activityViewing = act;
+        $state.go('activity');
+    };
+    $scope.doActivity = function(activityID) {
+
+        $http({
+            method: 'POST',
+            url: '/do',
+            data: {activity: activityID}  // pass in data as strings
+
         })
-};
+            .success(function (data) {
+                if (!data.success) {
+                    alert('error, you must not be connected to the internet, try again later');
+                } else {
+                    $state.go('rate');
+
+
+                }
+            })
+    }
+    };
+
+function activityDetailCtrl($scope,$http,$filter,$state,$rootScope) {
+   //pull the activity name from the root scope
+    $scope.thisActivity = $rootScope.activityViewing.activityName;
+    $scope.actObject = $rootScope.activityViewing;
+    $scope.todayAct = new Date();
+    //get the rating for this activity
+    $http({
+        method: 'POST',
+        url: '/oneRating',
+        data: {activity: $scope.thisActivity }  // pass in data as strings
+    })
+
+        .success(function (data) {
+            if (!data.success) {
+                // if not successful, bind errors to error variables
+                alert('error, you must not be connected to the internet, try again later');
+            } else {
+                if (!data.ratings[0]) {
+                    $scope.totalRating = 'Not Rated Yet';
+                    $scope.notRated = true;
+                } else {
+                  $scope.totalRating = data.ratings[0].Avg + '%';
+                }
+          }});
+    //get the notes
+    $http({
+        method: 'POST',
+        url: '/getNotes',
+        data: {activity: $scope.thisActivity }  // pass in data as strings
+    })
+        .success(function (data) {
+            if (!data.success) {
+                // if not successful, bind errors to error variables
+                alert('error, you must not be connected to the internet, try again later');
+            } else {
+                if (!data.notes) {
+                    $scope.notes = "You haven't tried this activity yet";
+
+                } else {
+                   $scope.notes = data.notes;
+                    $scope.timesDone = $scope.notes.length;
+                }
+            }});
+}
 
 angular
     .module('inspinia')
@@ -472,4 +534,5 @@ angular
     .controller('checkIn', checkIn)
     .controller('rateCtrl', rateCtrl)
     .controller('activityCtrl', activityCtrl)
+    .controller('activityDetailCtrl', activityDetailCtrl)
     .controller('chartJsCtrl', chartJsCtrl);

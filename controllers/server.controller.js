@@ -45,8 +45,6 @@ exports.doActivity = function(req,res){
         activity:  req.body.activity,
         user: req.session.user.email
     });
-    console.log(JSON.stringify(req.body));
-
     entry.save();
     res.send({success:true});
   //res.redirect('/')
@@ -92,17 +90,48 @@ exports.avgRatings = function(req,res){
                 _id: '$activity',
                 Avg: { $avg: '$rating'}
             }}
-
         ], function (err, results) {
             if (err) {
                 console.error(err);
             } else {
-                console.log(results);
                 return res.send({success:true, ratings: results});
-
             }
         }
-
     );
+};
 
-}
+exports.oneRating  = function(req,res){
+    var user = req.session.user.email;
+    var filter = req.body.activity;
+    models.activityNotes
+        .aggregate([
+            { $match: {user: user, activity: filter}},
+            { $group: {
+                _id: '$activity',
+                Avg: { $avg: '$rating'}
+            }}
+        ], function (err, results) {
+            if (err) {
+                console.error(err);
+            } else {
+                return res.send({success:true, ratings: results});
+            }
+        }
+    );
+};
+
+exports.getNotes = function(req,res){
+    var query = models.activityNotes.find();
+    var filter = req.session.user.email;
+    var activity = req.body.activity;
+    query.sort({createdOn: 'desc'});
+    query.where({user: filter, activity: activity });
+    query.exec(function(err, results){
+        res.send({
+            notes:results,
+            success:true});
+
+    });
+
+
+};
