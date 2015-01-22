@@ -41,7 +41,7 @@ function checkIn($scope,$http,$location,getData){
                 .success(function(data) {
                     if (!data.success) {
                         // if not successful, bind errors to error variables
-                     alert('error, you must not be connected to the internet, try again later');
+                        alert('error, you must not be connected to the internet, try again later');
                     } else {
                         $('#bouncer').addClass("animated rotateOutUpLeft");
                         $('#outRight').addClass("animated rotateOutUpRight");
@@ -49,25 +49,46 @@ function checkIn($scope,$http,$location,getData){
                             $('#bounceIn').show().addClass('animated rotateInDownRight');
                             $('#bouncer').hide();
                             $('#outRight').hide();
+
                             $http({
-                                method  : 'POST',
-                                url     : '/myActivities',
-                                data    : {},  // pass in data as strings
-                                headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+                                method: 'POST',
+                                url: '/myActivities',
+                                data: {},  // pass in data as strings
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
                             })
-                                .success(function(data) {
+                                .success(function (data) {
                                     if (!data.success) {
                                         alert('error, you must not be connected to the internet, try again later');
-                                    } else{
-                                        $scope.myActivities =  data.myActivities;
-                                       $scope.ratings =  getData.getting('/ratings',{});
-                                        console.log($scope.ratings);
+                                    } else {
+                                        $scope.myActivities = data.myActivities;
+                                        $http.get('/ratings').success(function (data) {
+                                            angular.forEach($scope.myActivities, function (key, value) {
+                                                angular.forEach(data.ratings, function (rkey, rvalue) {
+                                                    if (rkey._id === key.activityName) {
+                                                        if (rkey.Avg) {
+                                                            key.rating = rkey.Avg;
+                                                        } else {
+                                                            key.rating = 0;
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                            $scope.predicate = '-rating';
+
+                                            $scope.myRatings = data.ratings;
+                                            angular.forEach($scope.myActivities, function (key, value) {
+                                                if (!key.rating) {
+                                                    key.rating = 0;
+                                                }
+                                            });
+                                        })
                                     }
-                                })
+                                });
                         });
                     }
-                });
-        };
+                })
+    };
+
     $scope.doActivity = function(activityID){
 
         $http({
@@ -427,22 +448,24 @@ function activityCtrl($scope,$http,$rootScope,$state,$filter) {
     })
         .success(function (data) {
             if (!data.success) {
-
                 // if not successful, bind errors to error variables
                 alert('error, you must not be connected to the internet, try again later');
             } else {
                 $scope.myActivities = data.myActivities;
-                            angular.forEach($scope.myActivities, function(key, value){
-                                    angular.forEach(data.ratings, function(rkey,rvalue){
-                                       if(rkey._id === key.activityName){
-                                           if (rkey.Avg){
-                                                key.rating = rkey.Avg;
-                                           } else {
-                                               key.rating = 0;
-                                           }
-                                       }
-                                    });
-                            });
+                $http.get('/ratings').success(function (data) {
+
+                    angular.forEach($scope.myActivities, function (key, value) {
+                        angular.forEach(data.ratings, function (rkey, rvalue) {
+                            if (rkey._id === key.activityName) {
+                                if (rkey.Avg) {
+                                    key.rating = rkey.Avg;
+                                } else {
+                                    key.rating = 0;
+                                }
+                            }
+                        });
+                    });
+                });
                             $scope.predicate = '-rating';
 
                             $scope.myRatings = data.ratings;
@@ -450,10 +473,7 @@ function activityCtrl($scope,$http,$rootScope,$state,$filter) {
                                 if (!key.rating){
                                     key.rating = 0;
                                 }
-
                             })
-
-
                         }
                     });
 

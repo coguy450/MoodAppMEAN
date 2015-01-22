@@ -6,10 +6,10 @@ var bcrypt = require('bcryptjs');
 var models = require('../models/model.js');
 var session = require('client-sessions');
 var bodyParser = require('body-parser');
+var middleware = require('../controllers/middleware');
 
 
 /* GET home page. */
-
 router.get('/', utils.requireLogin, function(req, res) {
     res.render('index', {user: req.user});
 
@@ -20,7 +20,11 @@ router.post('/', function(req, res){
     return serverCtrl.filterByMember(req, res);
 });
 
-router.post('/myActivities', function(req, res){
+router.post('/myActivities',utils.requireLogin, function(req, res){
+    if (!req.session.user.email){alert('stop');
+    res.redirect('/logout')}
+    //console.log(req.session.user.email);
+
     return serverCtrl.myActivities(req, res);
 });
 
@@ -43,7 +47,14 @@ router.post('/register', function(req, res){
         password: hash
     });
     entry.save();
-    res.redirect(301,'/');
+    router.use(session({
+        cookieName: 'session',
+        secret: 'keyboard cat',
+        duration: 30 * 60 * 1000,
+        activeDuration: 5 * 60 * 1000
+    }));
+    router.use(middleware.simpleAuth);
+    res.render('login');
 });
 
 
@@ -56,6 +67,7 @@ router.get('/login', function(req, res){
         duration: 30 * 60 * 1000,
         activeDuration: 5 * 60 * 1000
     }));
+    router.use(middleware.simpleAuth);
     res.render('login');
 });
 

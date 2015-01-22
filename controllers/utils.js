@@ -50,8 +50,8 @@ module.exports.createApp = function() {
     app.use(session({
         cookieName: 'wagonTimeSession',
         secret: 'keyboard cat',
-        duration: 30 * 60 * 10000,
-        activeDuration: 5 * 60 * 1000
+        duration: 30 * 60 * 10000 * 30,
+        activeDuration: 5 * 60 * 10000 * 30
     }));
     app.use(csrf());
     app.use(middleware.simpleAuth);

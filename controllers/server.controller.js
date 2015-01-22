@@ -2,6 +2,7 @@ var models = require('../models/model.js');
 
 
 exports.myActivities = function(req, res){
+    if (!req.session.user.email){res.redirect(301,'/logout');} else {
     var query = models.userActivities.find();
     var filter = req.session.user.email;
     query.sort({activityName: 1});
@@ -11,9 +12,13 @@ exports.myActivities = function(req, res){
             myActivities:results,
             success:true})
     });
-};
+}};
 
 exports.myHistory = function(req, res){
+    console.log(req.session.user.email);
+    if (req.session.user.email == undefined){
+        console.log('danger will robinson');
+        res.redirect(301,'/logout');} else {
     var query = models.checkin.find();
     var filter = req.session.user.email;
     query.sort({createdOn: 'desc'});
@@ -24,7 +29,7 @@ exports.myHistory = function(req, res){
             myHistory:results,
             success:true})
     });
-};
+    }};
 
 exports.newUserRegister = function(req, res){
     var salt = bcrypt.genSaltSync(10);

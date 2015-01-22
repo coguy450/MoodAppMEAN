@@ -13,7 +13,6 @@ mongoose.connect('mongodb://demo:Col2nago@ds053320.mongolab.com:53320/standupmee
 //mongoose.connect('mongodb://localhost:27017/wagon1');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 var swig = require('swig');
@@ -41,7 +40,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 //from auth project
 
@@ -52,14 +50,13 @@ app.use(middleware.simpleAuth);
 
 
 
-// catch 404 and forward to error handler
-/*
+//catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-*/
+
 
 // error handlers
 
