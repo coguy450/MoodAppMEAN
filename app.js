@@ -9,8 +9,8 @@ var session = require('client-sessions');
 var csrf = require('csurf');
 var middleware = require('./controllers/middleware');
 //connect to mongodb
-//mongoose.connect('mongodb://demo:Col2nago@ds053320.mongolab.com:53320/standupmeetingnotes');
-mongoose.connect('mongodb://localhost:27017/wagon1');
+mongoose.connect('mongodb://demo:Col2nago@ds053320.mongolab.com:53320/standupmeetingnotes');
+//mongoose.connect('mongodb://localhost:27017/wagon1');
 
 var routes = require('./routes/index');
 
