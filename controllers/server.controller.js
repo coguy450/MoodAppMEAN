@@ -135,8 +135,20 @@ exports.getNotes = function(req,res){
         res.send({
             notes:results,
             success:true});
-
     });
-
-
 };
+
+exports.dailyScore = function(req,res){
+    var query = models.activityNotes.find() ;
+    var todayDate = new Date();
+    todayDate.setDate(todayDate.getDate()-1);
+    var filter = req.session.user.email;
+    query.where({user: filter, createdOn: {$gt:todayDate} });
+    query.exec(function(err, results){
+        res.send({
+            dailyScore:results,
+            success:true});
+        console.log(results)
+    });
+};
+

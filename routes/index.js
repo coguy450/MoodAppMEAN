@@ -96,7 +96,7 @@ router.get('/logout', function(req, res) {
 });
 
 
-router.post('/great', function(req, res){
+router.post('/great',utils.requireLogin, function(req, res){
     var entry = new models.checkin({
         type:     5,
         userID:   req.session.user.email
@@ -176,6 +176,21 @@ router.post('/oneRating', function(req,res){
 
 router.post('/getNotes', function(req,res){
     return serverCtrl.getNotes(req,res);
+});
+
+router.get('/dailyScore', function(req,res){
+    return serverCtrl.dailyScore(req,res);
+});
+
+router.post('/newPass',utils.requireLogin, function(req,res){
+    console.log
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.newPassword, salt);
+    var query = {email: req.session.user.email};
+    models.User.findOneAndUpdate(query, {password: hash}, function(err,doc) {
+        if (err) return res.send(500, { error: err });
+        return res.send({success: true});
+    })
 });
 
 module.exports = router;

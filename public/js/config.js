@@ -30,6 +30,7 @@ function config($stateProvider, $urlRouterProvider) {
             url:'/profile',
             templateUrl: 'views/profile.html',
             data: { pageTitle: 'Profile'}
+
         })
         .state('discover',{
             url: '/discover',

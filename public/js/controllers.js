@@ -3,18 +3,39 @@
  * MainCtrl - controller
  */
 
-function MainCtrl() {
+function MainCtrl($scope,$http) {
     this.userName = "example user";
     this.helloText = 'Welcome to WagonTime';
     this.descriptionText = '';
     this.giveMessage = 'default';
     this.slideInterval = 5000;
+    $http({
+        method  : 'GET',
+        url     : '/dailyScore',
+        data    : {}  // pass in data as strings
+    })
+        .success(function(data) {
+            if (!data.success) {
+                alert('error, you must not be connected to the internet, try again later');
+            } else{
+                $scope.dailyScore = 0;
+                $scope.dailyScore = $scope.dailyScore + (data.dailyScore.length * 5);
+                debugger
+                angular.forEach(data.dailyScore, function(value){
+                    if (value.rating){$scope.dailyScore = $scope.dailyScore + 2 }
+                    if (value.note){$scope.dailyScore = $scope.dailyScore +2}
+
+                });
+
+            }
+        });
 }
 
 
 
-function checkIn($scope,$http,$location,getData){
+function checkIn($scope,$http,$state){
     $scope.hideThis = "true";
+
     $scope.getActivities = function(){
         $http({
             method  : 'POST',
@@ -28,6 +49,7 @@ function checkIn($scope,$http,$location,getData){
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
                     $scope.myActivities = data.myActivities;
+                    console.log(data)
                 }
             })
     };
@@ -74,7 +96,6 @@ function checkIn($scope,$http,$location,getData){
                                                 });
                                             });
                                             $scope.predicate = '-rating';
-
                                             $scope.myRatings = data.ratings;
                                             angular.forEach($scope.myActivities, function (key, value) {
                                                 if (!key.rating) {
@@ -90,7 +111,6 @@ function checkIn($scope,$http,$location,getData){
     };
 
     $scope.doActivity = function(activityID){
-
         $http({
             method  : 'POST',
             url     : '/do',
@@ -101,7 +121,7 @@ function checkIn($scope,$http,$location,getData){
                 if (!data.success) {
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
-                    $location.path('/rate');
+                    $state.go('rate');
                   //success function
                     //$('#bounceIn').addClass("animated rotateOutUpLeft");
                    // $('#bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
@@ -479,7 +499,6 @@ function activityCtrl($scope,$http,$rootScope,$state,$filter) {
 
 
     $scope.goToActivity = function(act){
-
         $rootScope.activityViewing = act;
         $state.go('activity');
     };
@@ -548,6 +567,34 @@ function activityDetailCtrl($scope,$http,$filter,$state,$rootScope) {
             }});
 }
 
+
+function profileCtrl($scope,$http) {
+    $scope.newPassword = function () {
+        if ($scope.newP === $scope.confirmedPassword) {
+            $http({
+                method: 'POST',
+                url: '/newPass',
+                data: {newPassword: $scope.newP }  // pass in data as strings
+            })
+                .success(function (data) {
+                    if (!data.success) {
+                        // if not successful, bind errors to error variables
+                        alert('error, you must not be connected to the internet, try again later');
+                    } else {
+                        $scope.successMessage = "Your Password has been changed"
+                        $scope.newP = '';
+                        $scope.confirmedPassword = '';
+                    }
+
+                })
+
+        } else {
+            $scope.successMessage = "Your Passwords don't match"
+        }
+
+    }
+}
+
 angular
     .module('inspinia')
     .controller('MainCtrl ', MainCtrl)
@@ -555,4 +602,5 @@ angular
     .controller('rateCtrl', rateCtrl)
     .controller('activityCtrl', activityCtrl)
     .controller('activityDetailCtrl', activityDetailCtrl)
-    .controller('chartJsCtrl', chartJsCtrl);
+    .controller('chartJsCtrl', chartJsCtrl)
+    .controller('profileCtrl', profileCtrl);

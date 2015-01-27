@@ -51,7 +51,7 @@
                               <small>{{a.description}}</small>
                             </td>
                             <td class="project-completion">
-                                <small>Success Rating : {{a.rating}}%</small>
+                                <small>Success Rating : {{a.rating | number:2}}%</small>
                             </td>
                             <td class="project-actions">
                                 <form ng-submit="doActivity(a.activityName)">
@@ -81,12 +81,16 @@
             <div>
                 <div>
                     <span>Today's score</span>
-                    <small class="pull-right">10</small>
+                    <small class="pull-right">{{dailyScore}}</small>
                 </div>
-                <div class="progress progress-small">
-                    <div style="width: 50%;" class="progress-bar"></div>
+                <div ng-if="dailyScore < 20" class="progress progress-small">
+                    <div style="width: {{dailyScore}}%;" class="progress-bar progress-bar-danger"></div>
                 </div>
 
+
+                <div ng-if="dailyScore > 19" class="progress progress-small">
+                    <div style="width: {{dailyScore}}%;" class="progress-bar progress-bar"></div>
+                </div>
                 <div>
                     <span>Your Average</span>
                     <small class="pull-right">20</small>
@@ -108,7 +112,7 @@
                     <small class="pull-right">5</small>
                 </div>
                 <div class="progress progress-small">
-                    <div style="width: 10%;" class="progress-bar progress-bar-danger"></div>
+                    <div style="width: 5%;" class="progress-bar progress-bar-danger"></div>
                 </div>
             </div>
         </div>
@@ -129,6 +133,9 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr ng-repeat="u in myUnrated">
+                            <div ng-hide="u.id">
+                                <h3>No Activities need rated. Go do some activities! Then come back and rate them</h3>
+                            </div>
                             <td  class="project-status">
                                 <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
                                 <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
@@ -149,10 +156,7 @@
                                 </div>
 
                             </td>
-                            <td class="project-actions">
 
-
-                            </td>
                             <td class="project-actions">
                                 <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-thumbs-up"></i> Added</span>
                                 <small>Write some notes</small>

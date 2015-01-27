@@ -1,74 +1,38 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Timeline - left version</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a >Home</a>
-            </li>
-            <li>
-                <a>Extra pages</a>
-            </li>
-            <li class="active">
-                <strong>Timeline</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
+<div ng-controller="profileCtrl">
+<div class="row" >
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Change your password
 
-    </div>
-</div>
-<div class="wrapper wrapper-content">
-    <div class="row animated fadeInRight">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Basic left float timeline</h5>
+                </h5>
+                <div ibox-tools></div>
+            </div>
+            <div class="ibox-content">
+                <form  class="form-horizontal" >
+                    <div class="form-group"><label class="col-sm-2 control-label">New Password</label>
+                        <div class="col-sm-5"><input type="password" ng-model="newP" class="form-control"></div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Confirm Password</label>
 
-                    <div ibox-tools></div>
-                </div>
+                        <div class="col-sm-5"><input type="password" ng-model="confirmedPassword" class="form-control">
 
-                <div class="ibox-content inspinia-timeline">
-
-                    <div class="timeline-item">
-                        <div class="row">
-                            <div class="col-xs-3 date">
-                                <i class="fa fa-briefcase"></i>
-                                6:00 am
-                                <br/>
-                                <small class="text-navy">2 hour ago</small>
-                            </div>
-                            <div class="col-xs-7 content no-top-border">
-                                <p class="m-b-xs"><strong>Meeting</strong></p>
-
-                                <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the
-                                    sale.</p>
-
-                                <p>
-                                    <bar-chart data="main.BarChart2.data" options="main.BarChart2.options"></bar-chart>
-                                </p>
-                            </div>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="row">
-                            <div class="col-xs-3 date">
-                                <i class="fa fa-file-text"></i>
-                                7:00 am
-                                <br/>
-                                <small class="text-navy">3 hour ago</small>
-                            </div>
-                            <div class="col-xs-7 content">
-                                <p class="m-b-xs"><strong>Send documents to Mike</strong></p>
+                        <h3>{{successMessage}}</h3>
 
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
-                            </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <button class="btn btn-white" ui-sref="checkin" type="cancel">Cancel</button>
+                            <button class="btn btn-primary" ng-click="newPassword()">Change password</button>
                         </div>
                     </div>
-
-
-
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
