@@ -23,6 +23,12 @@ module.exports.checkin = mongoose.model('checkin', new Schema({
     createdOn:    {type: Date, default: Date.now}
 }));
 
+module.exports.feedback = mongoose.model('feedback', new Schema({
+    feedbackText:  {type: String, required: 'Feedback is required'},
+    userID:       {type: String},
+    createdOn:    {type: Date, default: Date.now}
+}));
+
 module.exports.allActivities = mongoose.model('allActivities',{
     id:                   ObjectId,
     activityName:         {type: String, required : 'Activity Name is required'},

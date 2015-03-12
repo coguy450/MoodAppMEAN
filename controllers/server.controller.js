@@ -68,6 +68,16 @@ exports.unrated = function(req, res){
     });
 };
 
+exports.feedback = function(req,res){
+    var entry = new models.feedback({
+        feedbackText:  req.body.feedback,
+        user: req.session.user.email
+    });
+    console.log(req.body);
+    entry.save();
+    res.send({success:true});
+    //res.redirect('/')
+};
 
 exports.rate = function(req, res){
     var query = {_id: req.body.activity};

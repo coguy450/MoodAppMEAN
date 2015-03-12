@@ -154,6 +154,11 @@ router.post('/myHistory', function(req, res){
     return serverCtrl.myHistory(req, res);
 });
 
+router.post('/feedback', function(req, res){
+    return serverCtrl.feedback(req, res);
+});
+
+
 router.get('/unrated', function(req,res){
     return serverCtrl.unrated(req,res);
 });

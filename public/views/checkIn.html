@@ -170,5 +170,20 @@
         </div>
         </div>
 
-  <br>
-        <br>
+<div class="row" ng-controller="checkIn">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Add some feedback for the site</h5>
+
+            </div>
+            <div class="ibox-content text-center">
+
+                <textarea ng-model="feedback" rows="4" cols="50">
+
+                </textarea> <button ng-click="addFeedback(feedback)">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+

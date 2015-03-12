@@ -7,6 +7,7 @@ function MainCtrl($scope,$http) {
     this.userName = "example user";
     this.helloText = 'Welcome to WagonTime';
     this.descriptionText = '';
+
     this.giveMessage = 'default';
     this.slideInterval = 5000;
     $http({
@@ -20,15 +21,16 @@ function MainCtrl($scope,$http) {
             } else{
                 $scope.dailyScore = 0;
                 $scope.dailyScore = $scope.dailyScore + (data.dailyScore.length * 5);
-                debugger
+
                 angular.forEach(data.dailyScore, function(value){
                     if (value.rating){$scope.dailyScore = $scope.dailyScore + 2 }
                     if (value.note){$scope.dailyScore = $scope.dailyScore +2}
-
                 });
 
             }
         });
+
+
 }
 
 
@@ -109,7 +111,23 @@ function checkIn($scope,$http,$state){
                     }
                 })
     };
+    $scope.addFeedback = function(feedback){
+     
+        $http({
+            method  : 'POST',
+            url     : '/feedback',
+            data    : {feedback:feedback}  // pass in data as strings
 
+        })
+            .success(function(data) {
+                if (!data.success) {
+                    alert('error, you must not be connected to the internet, try again later');
+                } else{
+
+
+                }
+            })
+    };
     $scope.doActivity = function(activityID){
         $http({
             method  : 'POST',
