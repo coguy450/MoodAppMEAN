@@ -21,7 +21,7 @@ exports.myHistory = function(req, res){
         res.redirect(301,'/logout');} else {
     var query = models.checkin.find();
     var filter = req.session.user.email;
-    query.sort({createdOn: 'desc'});
+    query.sort({createdOn: 'asc'});
     query.limit(25);
     query.where({userID: filter});
     query.exec(function(err, results){

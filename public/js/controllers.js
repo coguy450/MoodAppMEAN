@@ -37,7 +37,7 @@ function MainCtrl($scope,$http) {
 
 function checkIn($scope,$http,$state){
     $scope.hideThis = "true";
-
+    $scope.topMessage = "What are you up to?"
     $scope.getActivities = function(){
         $http({
             method  : 'POST',
@@ -67,6 +67,11 @@ function checkIn($scope,$http,$state){
                         // if not successful, bind errors to error variables
                         alert('error, you must not be connected to the internet, try again later');
                     } else {
+                            switch (happy) {
+                                case "ok":
+                                    $scope.topMessage = "You're doing OK, let's make it better by doing an activity"
+                                    break;
+                            }
                         $('#bouncer').addClass("animated rotateOutUpLeft");
                         $('#outRight').addClass("animated rotateOutUpRight");
                         $('#bouncer').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
@@ -112,7 +117,7 @@ function checkIn($scope,$http,$state){
                 })
     };
     $scope.addFeedback = function(feedback){
-     
+
         $http({
             method  : 'POST',
             url     : '/feedback',
@@ -139,7 +144,8 @@ function checkIn($scope,$http,$state){
                 if (!data.success) {
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
-                    $state.go('rate');
+                    $state.reload()
+                   // $state('checkin');
                   //success function
                     //$('#bounceIn').addClass("animated rotateOutUpLeft");
                    // $('#bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
@@ -434,6 +440,7 @@ function rateCtrl($scope,$http,$state){
             if (!data.success) {
                 alert('error, you must not be connected to the internet, try again later');
             } else{
+                if (data.myUnrated.length > 0){$scope.hideNo = true}
                 $scope.myUnrated= data.myUnrated;
             }
         });
@@ -448,9 +455,16 @@ function rateCtrl($scope,$http,$state){
                 if (!data.success) {
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
-                //successful save
+                //successful save]
                     $('#unrated'+ actID).hide();
                     $('#rated'+ actID).show();
+                    $('#feelHide'+actID).hide();
+                    $('#buttonBnc' +actID).addClass("animated rotateOutUpRight");
+                    $('#buttonBnc' +actID).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                        function () {
+                            $('#buttonBnc' + actID).hide();
+                            $('#notesMove').removeClass("project-actions").addClass("project-completion")
+                        });
                 }
             });
 
@@ -470,7 +484,10 @@ function rateCtrl($scope,$http,$state){
                     alert('error, you must not be connected to the internet, try again later');
                 } else{
                     //successful save
-                    $('#noted'+ actID).show();
+                    $("#noted" + actID).show();
+                    $('#notesMove' +actID).addClass("animated rotateOutUpRight");
+                   // $('#notesMove' +actID).hide();
+
                 }
             });
 

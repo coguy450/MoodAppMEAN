@@ -1,5 +1,52 @@
+<div ng-controller="checkIn">
+<h1>{{topMessage}}</h1>
 
-<h1>What are you up to today?</h1>
+    <div ng-controller="rateCtrl" class="row"  ng-show="hideNo">
+     <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Activities that need rated</h5>
+            </div>
+            <div class="ibox-content text-center">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="u in myUnrated">
+                        <td  class="project-status">
+                            <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
+                            <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
+                            <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-star"></i> Noted</span>
+                        </td>
+                        <td class="project-title">
+                            <a ui-sref="project_detail">{{u.activity}}</a>
+                            <br/>
+                            <small>Done on: {{u.createdOn | date: mediumDate}}</small>
+                        </td>
+                        <td class="project-completion">
+                            <small id="feelHide{{u._id}}">How did it make you feel? </small>
+                            <div id="buttonBnc{{u._id}}" class="btn-group-sm">
+                                <button ng-click="rateOne(u._id,100)" class="btn btn-sm btn-primary">Way Better</button>
+                                <button ng-click="rateOne(u._id,80)" class="btn btn-sm btn-success">A bit Better</button>
+                                <button ng-click="rateOne(u._id,50)" class="btn btn-sm btn-info">Same</button>
+                                <button ng-click="rateOne(u._id,30)" class="btn btn-sm btn-warning">A bit Worse</button>
+                                <button ng-click="rateOne(u._id,0)" class="btn btn-sm btn-danger">Way Worse</button>
+                            </div>
+
+                        </td>
+
+                        <td class="project-actions" id="notesMove{{u._id}}" >
+
+                                <textarea ng-model="notes" placeholder="Write some notes"></textarea>
+                                 <button ng-click="addNotes(u._id,notes)" style="margin-bottom: 30px" class="btn btn-info">Add notes</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 <div class="row"   ng-controller="checkIn">
     <div class="col-lg-6" id="bouncer"  ng-show="hideThis"  >
 
@@ -60,115 +107,46 @@
                                     <input type="hidden" name="actID" value="{{a.activityName}}">
                                 </form>
                             </td>
-
-
                         </tr>
-                       <div >
-               </div>
                     </table>
                     <a ui-sref="discover">Add a New Activity</a>
                 </div>
             </div>
 </div>
 
-
-
-
-
-
-    <div class="col-md-6" id="outRight">
-        <div class="ibox-content">
-            <div>
-                <div>
-                    <span>Today's score</span>
-                    <small class="pull-right">{{dailyScore}}</small>
+    <div class="wrapper wrapper-content animated" id="outRight">
+        <div class="col-lg-4">
+            <div class="widget style1 navy-bg">
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                        <i class="fa fa-trophy fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <span> Today's Score </span>
+                        <h2 class="font-bold"> {{dailyScore}}</h2>
+                    </div>
                 </div>
-                <div ng-if="dailyScore < 20" class="progress progress-small">
-                    <div style="width: {{dailyScore}}%;" class="progress-bar progress-bar-danger"></div>
-                </div>
-
-
-                <div ng-if="dailyScore > 19" class="progress progress-small">
-                    <div style="width: {{dailyScore}}%;" class="progress-bar progress-bar"></div>
-                </div>
-                <div>
-                    <span>Your Average</span>
-                    <small class="pull-right">20</small>
-                </div>
-                <div class="progress progress-small">
-                    <div style="width: 70%;" class="progress-bar"></div>
-                </div>
-
-                <div>
-                    <span>Average WagonTime user score</span>
-                    <small class="pull-right">17</small>
-                </div>
-                <div class="progress progress-small">
-                    <div style="width: 75%;" class="progress-bar"></div>
-                </div>
-
-                <div>
-                    <span>Unhealthy Level</span>
-                    <small class="pull-right">5</small>
-                </div>
-                <div class="progress progress-small">
-                    <div style="width: 5%;" class="progress-bar progress-bar-danger"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="widget style1 lazur-bg">
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                        <i class="fa fa-trophy fa-5x"></i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <span> Average Score </span>
+                        <h2 class="font-bold"> 40</h2>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
 
 
 
-    <div class="row" ng-controller="rateCtrl">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Activities that need rated</h5>
 
-                </div>
-                <div class="ibox-content text-center">
-                    <table class="table table-hover">
-                        <tbody>
-                        <tr ng-repeat="u in myUnrated">
-                            <div ng-hide="u.id">
-                                <h3>No Activities need rated. Go do some activities! Then come back and rate them</h3>
-                            </div>
-                            <td  class="project-status">
-                                <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
-                                <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
-                            </td>
-                            <td class="project-title">
-                                <a ui-sref="project_detail">{{u.activity}}</a>
-                                <br/>
-                                <small>Done on: {{u.createdOn | date: mediumDate}}</small>
-                            </td>
-                            <td class="project-completion">
-                                <small>How did it make you feel? </small>
-                                <div class="btn-group-sm">
-                                    <button ng-click="rateOne(u._id,100)" class="btn btn-sm btn-primary">Way Better</button>
-                                    <button ng-click="rateOne(u._id,80)" class="btn btn-sm btn-success">A bit Better</button>
-                                    <button ng-click="rateOne(u._id,50)" class="btn btn-sm btn-info">Same</button>
-                                    <button ng-click="rateOne(u._id,30)" class="btn btn-sm btn-warning">A bit Worse</button>
-                                    <button ng-click="rateOne(u._id,0)" class="btn btn-sm btn-danger">Way Worse</button>
-                                </div>
-
-                            </td>
-
-                            <td class="project-actions">
-                                <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-thumbs-up"></i> Added</span>
-                                <small>Write some notes</small>
-                                <input type="text" ng-model="notes"> <button ng-click="addNotes(u._id,notes)">Add notes</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
 
 <div class="row" ng-controller="checkIn">
     <div class="col-lg-12">

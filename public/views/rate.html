@@ -36,7 +36,7 @@
 <tr ng-repeat="u in myUnrated">
     <td  class="project-status">
         <span id="unrated{{u._id}}" class="label label-info">Unrated</span>
-      <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
+        <span class="label label-success" style="display: none" id="rated{{u._id}}"> <i class="fa fa-star"></i> Rated</span>
     </td>
     <td class="project-title">
         <a ui-sref="project_detail">{{u.activity}}</a>
@@ -44,8 +44,8 @@
         <small>Done on: {{u.createdOn | date: mediumDate}}</small>
     </td>
     <td class="project-completion">
-        <small>How did it make you feel? </small>
-        <div class="btn-group-sm">
+        <small id="feelHide">How did it make you feel? </small>
+        <div id="buttonBnc{{u._id}}" class="btn-group-sm">
             <button ng-click="rateOne(u._id,100)" class="btn btn-sm btn-primary">Way Better</button>
             <button ng-click="rateOne(u._id,80)" class="btn btn-sm btn-success">A bit Better</button>
             <button ng-click="rateOne(u._id,50)" class="btn btn-sm btn-info">Same</button>
@@ -54,16 +54,12 @@
         </div>
 
     </td>
-    <td class="project-actions">
 
-
-    </td>
-    <td class="project-actions">
-        <span class="label label-success" style="display: none" id="noted{{u._id}}"> <i class="fa fa-star"></i> Note Added</span>
+    <td class="project-actions" id="notesMove">
         <small>Write some notes</small>
-        <input type="text" ng-model="notes"> <button ng-click="addNotes(u._id,notes)">Add notes</button>
+        <textarea rows="1" ng-model="notes"></textarea>
+        <button ng-click="addNotes(u._id,notes)" class="btn btn-sm">Add notes</button>
     </td>
-
 </tr>
 
 </tbody>
